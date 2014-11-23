@@ -6,8 +6,6 @@ import org.json4s._
 import me.verticale.imgur.model._
 import org.json4s.native.JsonMethods._
 
-case class Response(data: List[Map[String, _]], success: Boolean, status: Int)
-
 /** Imgur API client
   *
   * @constructor Create new Imgur API client
@@ -42,13 +40,27 @@ class Imgur(clientId: String, baseUrl: String = "api.imgur.com/3") {
     def authorizedRequest = addAuthorization(request)
 
     val images = Http(authorizedRequest OK as.String)
-    val json = parse(images()).extract[Response]
+    val json = parse(images()).extract[AlbumImagesResponse]
 
     var result = List[Image]()
 
     for (image <- json.data)
-      result = new Image(image) :: result
+      result = image :: result
 
     result
+  }
+
+  /** Retrieve an album
+    *
+    * @param albumId The album identifier
+    */
+  def album(albumId: String): Album = {
+    def request = baseRequest / "album" / albumId
+    def authorizedRequest = addAuthorization(request)
+
+    val album = Http(authorizedRequest OK as.String)
+    val json = parse(album()).extract[AlbumResponse]
+
+    json.data
   }
 }

@@ -1,27 +1,27 @@
 package me.verticale.imgur.model
 
-case class Image(data: Map[String, _]) {
-  val id = data.get("id")
-  val title = data.get("title")
-  val description = data.get("description")
-  val datetime = data.get("datetime")
-  val _type = data.get("type")
-  val animated = data.get("animated")
-  val width = data.get("width")
-  val heigth = data.get("heigth")
-  val views = data.get("views")
-  val size = data.get("size")
-  val bandwidth = data.get("bandwidth")
-  val deletehash = data.get("deletehash")
-  val name = data.get("name")
-  val section = data.get("section")
-  val link = data.get("link")
-  val gifv = data.get("gifv")
-  val mp4 = data.get("mp4")
-  val webm = data.get("webm")
-  val looping = data.get("looping")
-  val favorite = data.get("favorite")
-  val nsfw = data.get("nsfw")
-  val vote = data.get("vote")
-  val account_url = data.get("account_url")
-}
+case class Image(
+  id: String,
+  title: String,
+  description: String,
+  datetime: String,
+  `type`: String,
+  animated: Boolean,
+  width: Int,
+  //heigth: Int,
+  views: Int,
+  size: Int,
+  bandwidth: Int,
+  //deletehash: String,
+  //name: String,
+  section: String,
+  link: String,
+  gifv: String,
+  mp4: String,
+  webm: String,
+  looping: Boolean,
+  favorite: Boolean,
+  //nsfw: Boolean,
+  vote: String,
+  account_url: String
+)
