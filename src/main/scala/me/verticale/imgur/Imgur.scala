@@ -2,7 +2,11 @@ package me.verticale.imgur
 
 import dispatch._
 import Defaults._
-import spray.json._
+import org.json4s._
+import me.verticale.imgur.model._
+import org.json4s.native.JsonMethods._
+
+case class Response(data: List[Map[String, _]], success: Boolean, status: Int)
 
 /** Imgur API client
   *
@@ -11,6 +15,8 @@ import spray.json._
   * @param baseUrl API's base URL, default "api.imgur.com/3/
   */
 class Imgur(clientId: String, baseUrl: String = "api.imgur.com/3") {
+
+  implicit val formats = DefaultFormats
 
   /** Base request host
     *
@@ -31,13 +37,18 @@ class Imgur(clientId: String, baseUrl: String = "api.imgur.com/3") {
     *
     * @param albumId The album identifier
     */
-  def albumImages(albumId: String): Unit = {
+  def albumImages(albumId: String): List[Image] = {
     def request = baseRequest / "album" / albumId / "images"
     def authorizedRequest = addAuthorization(request)
 
     val images = Http(authorizedRequest OK as.String)
+    val json = parse(images()).extract[Response]
 
-    val json = images().parseJson
-    println(json.prettyPrint)
+    var result = List[Image]()
+
+    for (image <- json.data)
+      result = new Image(image) :: result
+
+    result
   }
 }
