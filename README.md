@@ -1,4 +1,4 @@
-# ImgurAPI-Scala
+# Imgur-Scala
 
 > Scala Imgur API client
 
