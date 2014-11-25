@@ -6,9 +6,12 @@
 
 ## Progress
 
-It's a very early API client, so far you can :
+It's a very early API client, so far you can make GET requests :
 - get images from an album
-- that's all (for now)
+- get image from an album
+- get default memes
+- get an album
+- get an image
 
 ## Usage
 
