@@ -20,8 +20,30 @@ import me.verticale.imgur._
 
 val imgur = new Imgur("myClientId")
 
-val images = imgur.albumImages("albumId")
+val album = imgur.album("anAlbumId")
 
-for (image <- images)
-  println(image.link)
+// Print **safely** album id
+album.link foreach { id =>
+  println(id)
+}
+
+// Print **safely** every image link
+album.images foreach { images =>
+  images foreach { image =>
+    image.link foreach { link =>
+      println(link)
+    }
+  }
+}
+
+// Or with pattern matching (less safe)
+album.images match {
+  case Some(images) => images foreach {
+    _.link match {
+      case Some(link) => println(link)
+      case None => Unit
+    }
+  }
+  case None => Unit
+}
 ```
