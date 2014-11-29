@@ -46,6 +46,21 @@ class Imgur(clientId: String, baseUrl: String = "api.imgur.com/3") {
     json.data
   }
 
+  /** Retrieve an album
+    *
+    * @param albumId The album identifier
+    * @return The album
+    */
+  def album(albumId: String): Album = {
+    def request = baseRequest / "album" / albumId
+    def authorizedRequest = addAuthorization(request)
+
+    val album = Http(authorizedRequest OK as.String)
+    val json = parse(album()).extract[AlbumResponse]
+
+    json.data
+  }
+
   /** Retrieve an image from an album
     *
     * @param albumId The album identifier
@@ -80,21 +95,6 @@ class Imgur(clientId: String, baseUrl: String = "api.imgur.com/3") {
       result = image :: result
 
     result
-  }
-
-  /** Retrieve an album
-    *
-    * @param albumId The album identifier
-    * @return The album
-    */
-  def album(albumId: String): Album = {
-    def request = baseRequest / "album" / albumId
-    def authorizedRequest = addAuthorization(request)
-
-    val album = Http(authorizedRequest OK as.String)
-    val json = parse(album()).extract[AlbumResponse]
-
-    json.data
   }
 
   /** Retrieve all default memes
