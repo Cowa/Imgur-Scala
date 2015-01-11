@@ -111,7 +111,7 @@ class Imgur(clientId: String, baseUrl: String = "api.imgur.com/3") {
     var result = List[Image]()
 
     for (image <- json.data)
-    result = image :: result
+      result = image :: result
 
     result
   }
