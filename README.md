@@ -22,9 +22,13 @@ val imgur = new Imgur("myClientId")
 
 val album = imgur.album("anAlbumId")
 
-// Print **safely** album id
-album.link foreach { id =>
-  println(id)
+// Imgur API documentation doesn't specify optional attributes
+// So to avoid unexpected errors, every attribute are Option
+// Here how you can work with it :
+
+// Print **safely** album link
+album.link foreach { link =>
+  println(link)
 }
 
 // Print **safely** every image link
@@ -46,4 +50,8 @@ album.images match {
   }
   case None => Unit
 }
+
+// Or simply
+for (image <- album.images)
+  println(image.link.get)
 ```
