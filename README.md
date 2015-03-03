@@ -26,6 +26,10 @@ val album = imgur.album("anAlbumId")
 // So to avoid unexpected errors, every attribute are Option
 // Here how you can work with it :
 
+// Print images' link (easy way)
+for (image <- album.images)
+  println(image.link.get)
+
 // Print **safely** album link
 album.link foreach { link =>
   println(link)
@@ -40,7 +44,7 @@ album.images foreach { images =>
   }
 }
 
-// Or with pattern matching (less safe)
+// Or with pattern matching
 album.images match {
   case Some(images) => images foreach {
     _.link match {
@@ -50,8 +54,17 @@ album.images match {
   }
   case None => Unit
 }
-
-// Or simply
-for (image <- album.images)
-  println(image.link.get)
 ```
+
+## Tests
+
+To run tests, you have to set some environment variables :
+
+- `IMGUR_KEY`, your Imgur API key
+- `IMGUR_ALBUM`, an Imgur album ID
+
+No mock, only real world.
+
+Then run :
+
+`sbt test`
