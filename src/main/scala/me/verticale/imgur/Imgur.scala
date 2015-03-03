@@ -101,7 +101,7 @@ class Imgur(clientId: String, baseUrl: String = "api.imgur.com/3") {
     *
     * @return Images of default memes
     */
-  def memes: List[Image] = {
+  def memes(): List[Image] = {
     def request = baseRequest / "memegen" / "defaults"
     def authorizedRequest = addAuthorization(request)
 
